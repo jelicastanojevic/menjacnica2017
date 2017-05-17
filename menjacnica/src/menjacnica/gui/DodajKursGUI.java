@@ -1,7 +1,5 @@
 package menjacnica.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
+@SuppressWarnings("serial")
 public class DodajKursGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -40,7 +39,6 @@ public class DodajKursGUI extends JFrame {
 	private JButton btnDodaj;
 	private JButton btnOdus;
 
-	private MenjacnicaGUI glavniProzor;
 	private JSpinner spinnerSifra;
 
 	/**
@@ -71,9 +69,6 @@ public class DodajKursGUI extends JFrame {
 		contentPane.add(getBtnDodaj());
 		contentPane.add(getBtnOdus());
 		
-		//podesavanje
-		this.glavniProzor = glavniProzor;
-				
 	}
 
 	private JLabel getLblSifra() {
@@ -196,10 +191,9 @@ public class DodajKursGUI extends JFrame {
 			valuta.setSrednji(Double.parseDouble(textFieldSrednjiKurs.getText()));
 			
 			// Dodavanje valute u kursnu listu
-			glavniProzor.sistem.dodajValutu(valuta);
+			GUIKontroler.unesiKurs(valuta);
 
-			// Osvezavanje glavnog prozora
-			glavniProzor.prikaziSveValute();
+			
 			
 			//Zatvaranje DodajValutuGUI prozora
 			dispose();
