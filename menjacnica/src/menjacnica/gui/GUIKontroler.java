@@ -38,25 +38,25 @@ public class GUIKontroler {
 	}
 
 	public static void prikaziDodajKursProzor() {
-		dodajKursProzor = new DodajKursGUI(menjacnicaProzor);
+		dodajKursProzor = new DodajKursGUI();
 		dodajKursProzor.setLocationRelativeTo(menjacnicaProzor);
 		dodajKursProzor.setVisible(true);
 	}
 
 	public static void prikaziObrisiKursProzor(Valuta valuta) {
-		obrisiKursProzor = new ObrisiKursGUI(menjacnicaProzor, valuta);
+		obrisiKursProzor = new ObrisiKursGUI(valuta);
 		obrisiKursProzor.setLocationRelativeTo(null);
 		obrisiKursProzor.setVisible(true);
 	}
 
 	public static void prikaziIzvrsiZamenuProzor(Valuta valuta) {
-		izvrsiZamenuProzor = new IzvrsiZamenuGUI(menjacnicaProzor, valuta);
+		izvrsiZamenuProzor = new IzvrsiZamenuGUI(valuta);
 		izvrsiZamenuProzor.setLocationRelativeTo(null);
 		izvrsiZamenuProzor.setVisible(true);
 	}
 
 	public static void ugasiAplikaciju() {
-		int opcija = JOptionPane.showConfirmDialog(menjacnicaProzor.getContentPane(),
+		int opcija = JOptionPane.showConfirmDialog(menjacnicaProzor,
 				"Da li ZAISTA zelite da izadjete iz apliacije", "Izlazak", JOptionPane.YES_NO_OPTION);
 
 		if (opcija == JOptionPane.YES_OPTION)
@@ -67,12 +67,28 @@ public class GUIKontroler {
 		return sistem.vratiKursnuListu();
 	}
 
-	public static void unesiKurs(Valuta valuta) {
-		// Dodavanje valute u kursnu listu
-		sistem.dodajValutu(valuta);
+	public static void unesiKurs(int sifra, String naziv, String skraceniNaziv, String prodajni, String kupovni, String srednji) {
+		try {
+			Valuta valuta = new Valuta();
 
-		// Osvezavanje glavnog prozora
-		menjacnicaProzor.prikaziSveValute();
+			// Punjenje podataka o valuti
+			valuta.setNaziv(naziv);
+			valuta.setSkraceniNaziv(skraceniNaziv);
+			valuta.setSifra(sifra);
+			valuta.setProdajni(Double.parseDouble(prodajni));
+			valuta.setKupovni(Double.parseDouble(kupovni));
+			valuta.setSrednji(Double.parseDouble(srednji));
+			
+			// Dodavanje valute u kursnu listu
+			sistem.dodajValutu(valuta);
+
+			// Osvezavanje glavnog prozora
+			menjacnicaProzor.prikaziSveValute();
+			dodajKursProzor.dispose();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(menjacnicaProzor, e1.getMessage(),
+					"Greska", JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 
@@ -97,7 +113,7 @@ public class GUIKontroler {
 				menjacnicaProzor.prikaziSveValute();
 			}
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(menjacnicaProzor.getContentPane(), e1.getMessage(), "Greska",
+			JOptionPane.showMessageDialog(menjacnicaProzor, e1.getMessage(), "Greska",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -105,7 +121,7 @@ public class GUIKontroler {
 	public static void sacuvajUFajl() {
 		try {
 			JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showSaveDialog(menjacnicaProzor.getContentPane());
+			int returnVal = fc.showSaveDialog(menjacnicaProzor);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
@@ -113,13 +129,13 @@ public class GUIKontroler {
 				sistem.sacuvajUFajl(file.getAbsolutePath());
 			}
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(menjacnicaProzor.getContentPane(), e1.getMessage(), "Greska",
+			JOptionPane.showMessageDialog(menjacnicaProzor, e1.getMessage(), "Greska",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	public static void prikaziAboutProzor() {
-		JOptionPane.showMessageDialog(menjacnicaProzor.getContentPane(), "Autor: Bojan Tomic, Verzija 1.0",
+		JOptionPane.showMessageDialog(menjacnicaProzor, "Autor: Bojan Tomic, Verzija 1.0",
 				"O programu Menjacnica", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

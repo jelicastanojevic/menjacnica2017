@@ -1,6 +1,5 @@
 package menjacnica.gui;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -8,14 +7,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-
-import menjacnica.Valuta;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -44,7 +40,7 @@ public class DodajKursGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DodajKursGUI(MenjacnicaGUI glavniProzor) {
+	public DodajKursGUI() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DodajKursGUI.class.getResource("/icons/Screenshot.png")));
 		setResizable(false);
 		setTitle("Dodaj kurs");
@@ -68,7 +64,7 @@ public class DodajKursGUI extends JFrame {
 		contentPane.add(getTextFieldSkraceniNaziv());
 		contentPane.add(getBtnDodaj());
 		contentPane.add(getBtnOdus());
-		
+
 	}
 
 	private JLabel getLblSifra() {
@@ -78,6 +74,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblSifra;
 	}
+
 	private JLabel getLblNaziv() {
 		if (lblNaziv == null) {
 			lblNaziv = new JLabel("Naziv");
@@ -85,6 +82,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblNaziv;
 	}
+
 	private JTextField getTextFieldNaziv() {
 		if (textFieldNaziv == null) {
 			textFieldNaziv = new JTextField();
@@ -92,6 +90,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldNaziv;
 	}
+
 	private JLabel getLblProdajniKurs() {
 		if (lblProdajniKurs == null) {
 			lblProdajniKurs = new JLabel("Prodajni kurs");
@@ -99,6 +98,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblProdajniKurs;
 	}
+
 	private JLabel getLblKupovniKurs() {
 		if (lblKupovniKurs == null) {
 			lblKupovniKurs = new JLabel("Kupovni kurs");
@@ -106,6 +106,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblKupovniKurs;
 	}
+
 	private JTextField getTextFieldProdajniKurs() {
 		if (textFieldProdajniKurs == null) {
 			textFieldProdajniKurs = new JTextField();
@@ -113,6 +114,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldProdajniKurs;
 	}
+
 	private JTextField getTextFieldKupovniKurs() {
 		if (textFieldKupovniKurs == null) {
 			textFieldKupovniKurs = new JTextField();
@@ -120,6 +122,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldKupovniKurs;
 	}
+
 	private JLabel getLblSrednjiKurs() {
 		if (lblSrednjiKurs == null) {
 			lblSrednjiKurs = new JLabel("Srednji kurs");
@@ -127,6 +130,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblSrednjiKurs;
 	}
+
 	private JLabel getLblSkraceniNaziv() {
 		if (lblSkraceniNaziv == null) {
 			lblSkraceniNaziv = new JLabel("Skraceni naziv");
@@ -134,6 +138,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblSkraceniNaziv;
 	}
+
 	private JTextField getTextFieldSrednjiKurs() {
 		if (textFieldSrednjiKurs == null) {
 			textFieldSrednjiKurs = new JTextField();
@@ -141,6 +146,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldSrednjiKurs;
 	}
+
 	private JTextField getTextFieldSkraceniNaziv() {
 		if (textFieldSkraceniNaziv == null) {
 			textFieldSkraceniNaziv = new JTextField();
@@ -148,6 +154,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldSkraceniNaziv;
 	}
+
 	private JButton getBtnDodaj() {
 		if (btnDodaj == null) {
 			btnDodaj = new JButton("Dodaj");
@@ -159,6 +166,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return btnDodaj;
 	}
+
 	private JButton getBtnOdus() {
 		if (btnOdus == null) {
 			btnOdus = new JButton("Odustani");
@@ -170,6 +178,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return btnOdus;
 	}
+
 	private JSpinner getSpinnerSifra() {
 		if (spinnerSifra == null) {
 			spinnerSifra = new JSpinner();
@@ -177,29 +186,11 @@ public class DodajKursGUI extends JFrame {
 		}
 		return spinnerSifra;
 	}
-	
+
 	private void unesiKurs() {
-		try {
-			Valuta valuta = new Valuta();
-
-			// Punjenje podataka o valuti
-			valuta.setNaziv(textFieldNaziv.getText());
-			valuta.setSkraceniNaziv(textFieldSkraceniNaziv.getText());
-			valuta.setSifra((Integer)(spinnerSifra.getValue()));
-			valuta.setProdajni(Double.parseDouble(textFieldProdajniKurs.getText()));
-			valuta.setKupovni(Double.parseDouble(textFieldKupovniKurs.getText()));
-			valuta.setSrednji(Double.parseDouble(textFieldSrednjiKurs.getText()));
-			
-			// Dodavanje valute u kursnu listu
-			GUIKontroler.unesiKurs(valuta);
-
-			
-			
-			//Zatvaranje DodajValutuGUI prozora
-			dispose();
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
-					"Greska", JOptionPane.ERROR_MESSAGE);
-		}
+		int sifra = (Integer) spinnerSifra.getValue();
+		GUIKontroler.unesiKurs(sifra , textFieldNaziv.getText(),
+				textFieldSkraceniNaziv.getText(), textFieldProdajniKurs.getText(), textFieldKupovniKurs.getText(),
+				textFieldSrednjiKurs.getText());
 	}
 }
